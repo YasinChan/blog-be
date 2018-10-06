@@ -1,0 +1,13 @@
+'use strict';
+
+module.exports = appInfo => {
+  const config = exports = {};
+
+  config.cors = {
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    credentials: true,
+    origin: '*'
+  };
+
+  return config;
+};
