@@ -1,33 +1,10 @@
-# blog-be
+# 后端代码
 
+> 博客地址：[https://yasinchan.com](https://yasinchan.com)
 
+[主页代码开源地址](https://github.com/YasinChan/blog)
 
-## QuickStart
+[后台管理代码开源地址](https://github.com/YasinChan/admin)
 
-<!-- add docs here for user -->
+**技术栈：egg.js + mysql + qiniu **
 
-see [egg docs][egg] for more detail.
-
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
-
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org

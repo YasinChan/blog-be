@@ -17,43 +17,9 @@ class PostController extends Controller {
   }
 
   async getPostById() {
-    const { ctx, config } = this;
+    const { ctx } = this;
     const id = ctx.params.id;
-    let result = await ctx.model.Post.findOneById(id);
-
-    result = result.dataValues;
-
-    let pid = result.picture_id
-    let picture = await ctx.model.Upload.findOne({
-      where: {
-        id: pid,
-      },
-      raw: true,
-    })
-    let tagIds = await ctx.model.PostTagRel.findAll({
-      where: {
-        post_id: result.id,
-      },
-      attributes: ['tag_id'],
-    });
-    let tags = []
-    if (tagIds && tagIds.length) {
-      for (let vv of tagIds) {
-        let tagId = vv.dataValues.tag_id;
-        let tag = await ctx.model.Tag.findOne({
-          where: {
-            id: tagId,
-          },
-          attributes: ['id','name'],
-          raw: true,
-        });
-        tags.push(tag);
-      }
-    }
-    result.tags = tags;
-    result.picture = config.qiniu.prefix + '/' + picture.key
-
-
+    let result = await ctx.service.post.getPostById(id);
     ctx.body = {
       code: 0,
       message: 'success',
@@ -63,7 +29,9 @@ class PostController extends Controller {
 
   async create() {
     const { ctx } = this;
-    const { title, preview, markdown, rendered, picture_id, created_at, updated_at } = this.ctx.request.body;
+    const { title, preview, markdown, rendered, picture_id, created_at, updated_at } = ctx.request.body;
+
+    let pid = picture_id || 'default1';
 
     let id = nanoid(11);
     let post = await ctx.model.Post.create({
@@ -72,7 +40,7 @@ class PostController extends Controller {
       preview,
       markdown,
       rendered,
-      picture_id,
+      picture_id: pid,
       created_at,
       updated_at
     });
@@ -165,6 +133,35 @@ class PostController extends Controller {
       code: 0,
       message: 'success',
       result: "删除成功",
+    };
+  }
+
+  async getAllPostsByTagId() {
+    const { ctx, config } = this;
+    const tagId = ctx.params.id;
+
+    let postIds = await ctx.model.PostTagRel.findAll({
+      where: {
+        tag_id: tagId,
+      },
+      attributes: ['post_id'],
+      order: [[ 'updated_at', 'DESC' ]],
+    });
+    let arr = [];
+
+    if (postIds && postIds.length) {
+      for (var v of postIds) {
+        let id = v.dataValues.post_id;
+        let result = await ctx.service.post.getPostById(id);
+        result && arr.push(result);
+      }
+    }
+
+    ctx.status = 200;
+    ctx.body = {
+      code: 0,
+      message: 'success',
+      result: arr
     };
   }
 }

@@ -5,6 +5,9 @@
  */
 module.exports = app => {
   const { router, controller } = app;
+
+  router.post('/api/login', controller.auth.login); // 登录
+
   router.get('/api/post', controller.post.index); //  获取所有文章列表内容
 
   router.get('/api/post/:id', controller.post.getPostById);   // 通过id 获取文章内容
@@ -14,6 +17,8 @@ module.exports = app => {
   router.post('/api/post/update', controller.post.updatePostById);    // 修改更新文章
 
   router.delete('/api/post/:id', controller.post.deletePostById);
+
+  router.get('/api/postbytagid/:id', controller.post.getAllPostsByTagId); // 通过tagid 获取文章列表
 
   router.post('/api/updatetagbypostid', controller.post.updateTagByPostId);  // 在文章中修改其标签
 

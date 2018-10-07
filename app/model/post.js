@@ -46,6 +46,7 @@ module.exports = app => {
   Post.getAll = async function () {   // 获取文章列表
     let posts = await this.findAll({
       raw: true,
+      order: [[ 'updated_at', 'DESC' ]],
     });
 
     for (let v of posts) {
@@ -82,6 +83,11 @@ module.exports = app => {
     }
     return posts
   };
+
+  Post.getAllPostsByTagId = async function () {
+
+
+  }
 
   return Post;
 };
