@@ -31,7 +31,7 @@ class PostController extends Controller {
     const { ctx } = this;
     const { title, preview, markdown, rendered, picture_id, created_at, updated_at } = ctx.request.body;
 
-    let pid = picture_id || 'default1';
+    let pid = picture_id || 'default2';
 
     let id = nanoid(11);
     let post = await ctx.model.Post.create({

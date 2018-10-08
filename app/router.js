@@ -24,7 +24,9 @@ module.exports = app => {
 
   router.get('/api/uptoken', controller.qiniu.getUptoken);    // 获取 七牛 上传图片 token 用来前端上传图片
 
-  router.post('/api/saveupload', controller.qiniu.saveupload);  //  保存图片
+  router.get('/api/getUploads', controller.upload.getUploads);  // 获取所有upload
+
+  router.post('/api/saveupload', controller.upload.saveupload);  //  保存图片
 
   router.get('/api/tag', controller.tag.getTags); //获取所有标签
 

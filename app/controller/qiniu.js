@@ -3,7 +3,6 @@
 const Controller = require('egg').Controller;
 
 const qiniu = require('qiniu');
-const nanoid = require('nanoid');
 
 class QiniuController extends Controller {
   async getUptoken() {
@@ -21,24 +20,6 @@ class QiniuController extends Controller {
     const uploadToken=  putPolicy.uploadToken(mac);
 
     ctx.body = uploadToken;
-  }
-
-  async saveupload() {
-    const { ctx } = this;
-    console.log(ctx.request.body);
-    let id = nanoid(11);
-    const item = await ctx.model.Upload.create({
-      id: id,
-      hash: ctx.request.body.hash,
-      key: ctx.request.body.key,
-      description: ''
-    });
-    console.log(item);
-    ctx.body = {
-      code: 0,
-      message: 'success',
-      result: item
-    };
   }
 }
 
