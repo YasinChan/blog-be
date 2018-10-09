@@ -34,5 +34,10 @@ module.exports = app => {
 
   router.post('/api/createtag', controller.tag.createTag);  // 新增标签
 
+  router.get('/api/note', controller.note.getNotes); // 获取所有便签
+
+  router.post('/api/note', controller.note.createNote); // 新建便签
+
+  router.delete('/api/note/:id', controller.note.deleteNoteById);  // 删除便签
 
 };

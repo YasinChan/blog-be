@@ -10,7 +10,8 @@ class TagController extends Controller {
 
     const result = await ctx.model.Tag.findAll({
       raw: true,
-      attributes: ['id', 'name']
+      attributes: ['id', 'name'],
+      order: [[ 'updated_at', 'DESC' ]],
     });
 
     ctx.body = {
@@ -22,7 +23,7 @@ class TagController extends Controller {
 
   async updateTag() {
     const { ctx } = this;
-    const { id, name } = this.ctx.request.body;
+    const { id, name } = ctx.request.body;
     let tag = await ctx.model.Tag.update({
       name,
     }, {
@@ -50,7 +51,7 @@ class TagController extends Controller {
 
   async createTag() {
     const { ctx } = this;
-    const { name } = this.ctx.request.body;
+    const { name } = ctx.request.body;
 
     let id = nanoid(11);
     let tag = await ctx.model.Tag.create({
